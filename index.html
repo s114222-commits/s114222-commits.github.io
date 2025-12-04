@@ -1,99 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Guess the Element</title>
-<style>
-body {
-font-family: Arial, sans-serif;
-margin: 0;
-padding: 0;
-display: flex;
-justify-content: center;
-align-items: flex-start;
-background: #f3f3f3;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guess the Element</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: #f3f3f3;
+    }
 
+    .container {
+      margin-top: 20px;
+      width: 90%;
+      max-width: 900px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
 
-.container {
-margin-top: 20px;
-width: 90%;
-max-width: 900px;
-background: white;
-padding: 20px;
-border-radius: 12px;
-box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+    .periodic-table {
+      width: 100%;
+      display: block;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
 
+    .bottom-area {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
 
-.periodic-table {
-width: 100%;
-display: block;
-margin-bottom: 20px;
-border-radius: 10px;
-border: 1px solid #ccc;
-}
+    .input-area, .result-area {
+      width: 48%;
+      padding: 15px;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
 
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
 
-.bottom-area {
-display: flex;
-justify-content: space-between;
-margin-top: 20px;
-}
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
 
-
-.input-area, .result-area {
-width: 48%;
-padding: 15px;
-background: #fafafa;
-border: 1px solid #ddd;
-border-radius: 10px;
-}
-
-
-label {
-display: block;
-font-weight: bold;
-margin-bottom: 8px;
-}
-
-
-input[type="text"] {
-width: 100%;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 6px;
-font-size: 16px;
-}
-
-
-.result-text {
-font-size: 18px;
-font-weight: bold;
-}
-</style>
+    .result-text {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<h2>Guess the Element</h2>
+  <div class="container">
+    <h2>Guess the Element</h2>
 
+    <!-- Placeholder: You can replace this with your own image later -->
+    <img
+      src="https://www.thoughtco.com/thmb/VheBQlPUlJxscqvyynSOY6aKGbg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-604346724-589a56263df78caebc80b0c5.jpg"
+      alt="Periodic Table"
+      class="periodic-table"
+    />
 
-<!-- Placeholder: You can replace this with your own image later -->
-<img
-src="https://www.thoughtco.com/thmb/VheBQlPUlJxscqvyynSOY6aKGbg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-604346724-589a56263df78caebc80b0c5.jpg"
-alt="Periodic Table"
-class="periodic-table"
-/>
+    <div class="bottom-area">
+      <div class="input-area">
+        <label for="guess">Your Guess:</label>
+        <input type="text" id="guess" placeholder="Type an element symbol (e.g., H, He, Li)..." />
+      </div>
 
+      <div class="result-area">
+        <label>Result:</label>
+        <p class="result-text">(Waiting for your guess...)</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    // --- JS for the guessing game with hints ---
+    const elements = [
+      { name: "Hydrogen", symbol: "H", number: 1, metal: false, oxidation: "-1 to +1" },
+      { name: "Helium", symbol: "He", number: 2, metal: false, oxidation: "0" },
+      { name: "Lithium", symbol: "Li", number: 3, metal: true, oxidation: "+1" },
+      { name: "Beryllium", symbol: "Be", number: 4, metal: true, oxidation: "+2" },
+      { name: "Boron", symbol: "B", number: 5, metal: false, oxidation: "+3" },
+      { name: "Carbon", symbol: "C", number: 6, metal: false, oxidation: "-4 to +4" },
+      { name: "Nitrogen", symbol: "N", number: 7, metal: false, oxidation: "-3 to +5" },
+      { name: "Oxygen", symbol: "O", number: 8, metal: false, oxidation: "-2" },
+      { name: "Fluorine", symbol: "F", number: 9, metal: false, oxidation: "-1" },
+      { name: "Neon", symbol: "Ne", number: 10, metal: false, oxidation: "0" }
+    ];
 
-<div class="bottom-area">
-<div class="input-area">
-<label for="guess">Your Guess:</label>
-<input type="text" id="guess" placeholder="Type an element name..." />
-</div>
+    const answer = elements[Math.floor(Math.random() * elements.length)];
+    let hintStep = 0;
 
+    const input = document.getElementById("guess");
+    const resultText = document.querySelector(".result-text");
 
-<div class="result-area">
-<label>Result:</label>
+    input.addEventListener("change", () => {
+      const guess = input.value.trim().toLowerCase();
+      const correct = answer.symbol.toLowerCase();
+
+      if (guess === correct) {
+        resultText.textContent = "Correct! The element was: " + answer.name;
+      } else {
+        hintStep++;
+        if (hintStep === 1) {
+          resultText.textContent = `Wrong! Hint 1: Atomic number is between ${answer.number - 20} and ${answer.number + 20}.`;
+        } else if (hintStep === 2) {
+          resultText.textContent = `Wrong again! Hint 2: This element is ${answer.metal ? "a metal" : "not a metal"}.`;
+        } else if (hintStep === 3) {
+          resultText.textContent = `Another try! Hint 3: Common oxidation state(s): ${answer.oxidation}.`;
+        } else {
+          resultText.textContent = "Still incorrect — keep trying!";
+        }
+      }
+    });
+  </script>
+</body>
 </html>
+
