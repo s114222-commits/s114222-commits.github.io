@@ -194,7 +194,12 @@
         } else if (hintStep === 2) {
           resultText.textContent = `Wrong again! Hint 2: This element is ${answer.metal ? "a metal" : "not a metal"}.`;
         } else if (hintStep === 3) {
-          resultText.textContent = `Another try! Hint 3: Common oxidation state(s): ${answer.oxidation}.`;
+    const oxList = answer.oxidation.split(",").map(v => parseInt(v));
+    const minOx = Math.min(...oxList);
+    const maxOx = Math.max(...oxList);
+    resultText.textContent = `Hint 3: Oxidation range: ${minOx} ~ ${maxOx}`;
+}
+
         } else {
           resultText.textContent = "Still incorrect — keep trying!";
         }
