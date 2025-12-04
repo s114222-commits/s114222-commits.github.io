@@ -182,8 +182,6 @@
       { name: "Francium", symbol: "Fr", number: 87, metal: true, oxidation: "+1" },
       { name: "Radium", symbol: "Ra", number: 88, metal: true, oxidation: "+2" }
     ];
-
-    const answer = elements[Math.floor(Math.random() * elements.length)];
     let hintStep = 0;
 
     const input = document.getElementById("guess");
@@ -194,7 +192,21 @@
       const correct = answer.symbol.toLowerCase();
 
       if (guess === correct) {
-        resultText.textContent = "Correct! The element was: " + answer.name + " — refreshing...";
+        resultText.textContent = "Correct! The element was: " + answer.name + " — starting new round...";
+        setTimeout(() => {
+          // Reset for new round
+          hintStep = 0;
+          input.value = "";
+          resultText.textContent = "(Waiting for your guess...)";
+
+          // Pick a new element
+          const newIndex = Math.floor(Math.random() * elements.length);
+          answer.name = elements[newIndex].name;
+          answer.symbol = elements[newIndex].symbol;
+          answer.number = elements[newIndex].number;
+          answer.metal = elements[newIndex].metal;
+          answer.oxidation = elements[newIndex].oxidation;
+        }, 1200);
         setTimeout(() => { location.reload(); }, 1200);
       } else {
         hintStep++;
@@ -203,37 +215,7 @@
         } else if (hintStep === 2) {
           resultText.textContent = `Wrong again! Hint 2: This element is ${answer.metal ? "a metal" : "not a metal"}.`;
         } else if (hintStep === 3) {
-          // Parse numbers from the oxidation string and show valence range (價數範圍)
-          const nums = Array.from((answer.oxidation || "").matchAll(/-?\d+/g), m => parseInt(m[0]));
-          if (nums.length) {
-            const min = Math.min(...nums);
-            const max = Math.max(...nums);
-            resultText.textContent = "Hint 3: Valence range (價數範圍): " + min + " ~ " + max;
-          } else {
-            // Fallback if oxidation data isn't numeric
-            resultText.textContent = "Hint 3: Valence info: " + answer.oxidation;
-          }
-        } else {
-          resultText.textContent = "Still incorrect — keep trying!";
-        }
-      }
-    });
-  </script> min = Math.min(...nums);
-            const max = Math.max(...nums);
-            resultText.textContent = "Hint 3: Valence range (價數範圍): " + min + " ~ " + max;
-          } else {
-            // Fallback if oxidation data isn't numeric
-            resultText.textContent = "Hint 3: Valence info: " + answer.oxidation;
-          }
-        } else {r.oxidation || "").matchAll(/-?\d+/g), m => parseInt(m[0]));
-          if (nums.length) {
-            const min = Math.min(...nums);
-            const max = Math.max(...nums);
-            resultText.textContent = `Hint 3: Valence range (價數範圍): ${min} ~ ${max}`;
-          } else {
-            // Fallback if oxidation data isn't numeric
-            resultText.textContent = `Hint 3: Valence info: ${answer.oxidation}`;
-          }
+          resultText.textContent = `Another try! Hint 3: Common oxidation state(s): ${answer.oxidation}.`;
         } else {
           resultText.textContent = "Still incorrect — keep trying!";
         }
@@ -242,5 +224,4 @@
   </script>
 </body>
 </html>
-
 
