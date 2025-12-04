@@ -73,7 +73,7 @@
 
     <!-- Placeholder: You can replace this with your own image later -->
     <img
-      src="https://www.thoughtco.com/thmb/VheBQlPUlJxscqvyynSOY6aKGbg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-604346724-589a56263df78caebc80b0c5.jpg"
+      src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Periodic_Table_of_Elements.png"
       alt="Periodic Table"
       class="periodic-table"
     />
@@ -116,7 +116,8 @@
       const correct = answer.symbol.toLowerCase();
 
       if (guess === correct) {
-        resultText.textContent = "Correct! The element was: " + answer.name;
+        resultText.textContent = "Correct! The element was: " + answer.name + " — refreshing...";
+        setTimeout(() => { location.reload(); }, 1200);
       } else {
         hintStep++;
         if (hintStep === 1) {
@@ -133,4 +134,5 @@
   </script>
 </body>
 </html>
+
 
