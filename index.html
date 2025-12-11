@@ -187,13 +187,25 @@
       const correct = answer.symbol.toLowerCase();
 
       if (guess === correct) {
-        resultText.textContent = `Correct! The element was: ${answer.name} — starting new round...`;
+        const ox = answer.oxidation;
+        const minOx = Math.min(...ox);
+        const maxOx = Math.max(...ox);
+        const rangeText = (minOx === maxOx) ? `${minOx}` : `${minOx} ~ ${maxOx}`;
+
+        // 英中介紹文字
+        const introEn = `Element: ${answer.name} (${answer.symbol}) | Atomic Number: ${answer.number} | Metal: ${answer.metal ? "Yes" : "No"} | Oxidation Range: ${rangeText}`;
+        const introZh = `元素：${answer.name}（${answer.symbol}）｜原子序：${answer.number}｜是否為金屬：${answer.metal ? "是" : "否"}｜氧化數範圍：${rangeText}`;
+
+        resultText.textContent = introEn + "
+" + introZh + "
+(Resetting in 5 seconds...)";
+
         setTimeout(() => {
           hintStep = 0;
           input.value = "";
           resultText.textContent = "(Waiting for your guess...)";
           answer = elements[Math.floor(Math.random() * elements.length)];
-        }, 1200);
+        }, 5000);
       } else {
         hintStep++;
         if (hintStep === 1) {
@@ -213,5 +225,4 @@
   </script>
 </body>
 </html>
-
 
