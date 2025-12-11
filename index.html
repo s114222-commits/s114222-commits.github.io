@@ -209,7 +209,6 @@ modal.style.display = "block";
 
 setTimeout(() => {
   modal.style.display = "none";
- modal.style.backgroundColor = "white"
   hintStep = 0;
   input.value = "";
   resultText.textContent = "(Waiting for your guess...)";
@@ -233,7 +232,7 @@ setTimeout(() => {
     });
   </script>
   <!-- Centered intro modal -->
-  <div id="introModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width: 90%; max-width:600px; padding:20px; border-radius:14px; box-shadow:0 4px 20px rgba(0,0,0,0.25); z-index:999; text-align:center; font-size:18px; line-height:1.5;"></div>
+  <div id="introModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width: 90%; max-width:600px; padding:20px; border-radius:14px; box-shadow:0 4px 20px rgba(0,0,0,0.25); z-index:999; text-align:center; font-size:18px; line-height:1.5;background-color:white;"></div>
 </body>
 </html>
 
