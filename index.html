@@ -196,14 +196,23 @@
         const introEn = `Element: ${answer.name} (${answer.symbol}) | Atomic Number: ${answer.number} | Metal: ${answer.metal ? "Yes" : "No"} | Oxidation Range: ${rangeText}`;
         const introZh = `元素：${answer.name}（${answer.symbol}）｜原子序：${answer.number}｜是否為金屬：${answer.metal ? "是" : "否"}｜氧化數範圍：${rangeText}`;
 
-        resultText.textContent = introEn + "" + introZh + "(Resetting in 5 seconds...)";
+        // 顯示中央介紹
+const modal = document.getElementById("introModal");
+modal.innerHTML = `
+  <b>Atomic Number｜原子序：</b> ${answer.number}<br>
+  <b>Electronegativity｜電負度：</b> ${answer.electronegativity ?? "N/A"}<br>
+  <b>Melting Point｜熔點：</b> ${answer.melting ?? "N/A"}<br>
+  <b>Boiling Point｜沸點：</b> ${answer.boiling ?? "N/A"}<br>
+`;
+modal.style.display = "block";
 
-        setTimeout(() => {
-          hintStep = 0;
-          input.value = "";
-          resultText.textContent = "(Waiting for your guess...)";
-          answer = elements[Math.floor(Math.random() * elements.length)];
-        }, 5000);
+setTimeout(() => {
+  modal.style.display = "none";
+  hintStep = 0;
+  input.value = "";
+  resultText.textContent = "(Waiting for your guess...)";
+  answer = elements[Math.floor(Math.random() * elements.length)];
+}, 5000);
       } else {
         hintStep++;
         if (hintStep === 1) {
@@ -221,6 +230,9 @@
       }
     });
   </script>
+  <!-- Centered intro modal -->
+  <div id="introModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:80%; max-width:600px; background:white; padding:20px; border-radius:14px; box-shadow:0 4px 20px rgba(0,0,0,0.25); z-index:999; text-align:center; font-size:18px; line-height:1.5;"></div>
 </body>
 </html>
+
 
