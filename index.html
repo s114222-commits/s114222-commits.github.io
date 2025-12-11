@@ -196,9 +196,7 @@
         const introEn = `Element: ${answer.name} (${answer.symbol}) | Atomic Number: ${answer.number} | Metal: ${answer.metal ? "Yes" : "No"} | Oxidation Range: ${rangeText}`;
         const introZh = `元素：${answer.name}（${answer.symbol}）｜原子序：${answer.number}｜是否為金屬：${answer.metal ? "是" : "否"}｜氧化數範圍：${rangeText}`;
 
-        resultText.textContent = introEn + "
-" + introZh + "
-(Resetting in 5 seconds...)";
+        resultText.textContent = introEn + "" + introZh + "(Resetting in 5 seconds...)";
 
         setTimeout(() => {
           hintStep = 0;
